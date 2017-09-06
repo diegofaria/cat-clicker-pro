@@ -11,7 +11,7 @@ const config = merge(common, {
     },
     plugins: [
         // new BundleAnalyzerPlugin({
-        //     openAnalyzer: false
+        //     openAnalyzer: true
         // })
     ]
 });
