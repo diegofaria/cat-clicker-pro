@@ -4,13 +4,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 const config = {
+    devtool: 'source-map',
     entry: {
         app: './src/index.js',
         vendor: ['lodash', 'react', 'react-dom']
     },
     output: {
         filename: '[name].[chunkhash].js',
-        path: path.resolve(__dirname, 'dist')
+        path: path.resolve(__dirname, 'dist'),
+        sourceMapFilename: 'sourcemaps/[file].map'
     },
     module: {
         rules: [
@@ -25,10 +27,11 @@ const config = {
         new CleanWebpackPlugin(['dist']),
         new webpack.HashedModuleIdsPlugin(),
         new webpack.optimize.CommonsChunkPlugin({
-            name: [ // the order matters :)
-                'vendor', // third-party libraries
-                'runtime', // webpack boilerplate code
-            ]
+            name: 'vendor'
+        }),
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'runtime', // webpack boilerplate code
+            minChunks: Infinity
         }),
         new HtmlWebpackPlugin({
             inject: false,
@@ -36,7 +39,10 @@ const config = {
             title: 'Caching',
             appMountId: 'react-root'
         })
-    ]
+    ],
+    resolve: {
+        symlinks: false
+    }
 };
 
 module.exports = config;

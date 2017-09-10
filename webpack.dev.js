@@ -4,15 +4,16 @@ const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPl
 const UglifyJSPlugin = require('uglifyjs-webpack-plugin');
 const common = require('./webpack.common');
 
+const ENABLE_BUNDLE_ANALYZER = false;
+
 const config = merge(common, {
     devtool: 'source-map',
     devServer: {
         contentBase: './dist'
     },
     plugins: [
-        // new BundleAnalyzerPlugin({
-        //     openAnalyzer: true
-        // })
+        ENABLE_BUNDLE_ANALYZER ?
+            new BundleAnalyzerPlugin({ openAnalyzer: true }) : () => {}
     ]
 });
 
