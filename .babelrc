@@ -3,5 +3,8 @@
         ["es2015", { "modules": false }],
         "react"
     ],
-    "plugins": ["babel-plugin-transform-object-rest-spread"]
+    "plugins": [
+        "syntax-dynamic-import",
+        "babel-plugin-transform-object-rest-spread"
+    ]
 }

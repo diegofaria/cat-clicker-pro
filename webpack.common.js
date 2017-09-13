@@ -12,12 +12,12 @@ const extractSass = new ExtractTextPlugin({
 const config = {
     devtool: 'source-map',
     entry: {
-        app: './src/index.js',
-        vendor: ['lodash', 'react', 'react-dom']
+        app: './src/index.js'
     },
     output: {
         filename: '[name].[chunkhash].js',
         path: path.resolve(__dirname, 'dist'),
+        chunkFilename: '[name].bundle.js',
         sourceMapFilename: 'sourcemaps/[file].map'
     },
     module: {
@@ -27,37 +27,37 @@ const config = {
                 include: [path.resolve(__dirname, 'src')],
                 loader: ['babel-loader']
             },
-            {
-                test: /\.scss$/,
-                include: [path.resolve(__dirname, 'src')],
-                use: extractSass.extract({
-                    use: [{
-                        loader: "css-loader", // translates CSS into CommonJS
-                        options: {
-                            modules: true,
-                            importLoaders: 1, // how many loaders load should be applied before css-loader
-                            localIdentName: '[name]__[local]--[hash:base64:5]',
-                            minimize: true
-                        }
-                    }, {
-                        loader: "sass-loader", // compiles Sass to CSS
-                    }],
-                    fallback: "style-loader" // creates style nodes from JS strings
-                })
-            }
+            // {
+            //     test: /\.scss$/,
+            //     include: [path.resolve(__dirname, 'src')],
+            //     use: extractSass.extract({
+            //         use: [{
+            //             loader: "css-loader", // translates CSS into CommonJS
+            //             options: {
+            //                 modules: true,
+            //                 importLoaders: 1, // how many loaders load should be applied before css-loader
+            //                 localIdentName: '[name]__[local]--[hash:base64:5]',
+            //                 minimize: true
+            //             }
+            //         }, {
+            //             loader: "sass-loader", // compiles Sass to CSS
+            //         }],
+            //         fallback: "style-loader" // creates style nodes from JS strings
+            //     })
+            // }
         ]
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
-        new webpack.HashedModuleIdsPlugin(),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'vendor'
-        }),
-        new webpack.optimize.CommonsChunkPlugin({
-            name: 'runtime', // webpack boilerplate code
-            minChunks: Infinity
-        }),
-        extractSass,
+        // new webpack.HashedModuleIdsPlugin(),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'vendor'
+        // }),
+        // new webpack.optimize.CommonsChunkPlugin({
+        //     name: 'runtime', // webpack boilerplate code
+        //     minChunks: Infinity
+        // }),
+        // extractSass,
         new HtmlWebpackPlugin({
             inject: false,
             template: require('html-webpack-template'),

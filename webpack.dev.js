@@ -7,7 +7,6 @@ const common = require('./webpack.common');
 const ENABLE_BUNDLE_ANALYZER = false;
 
 const config = merge(common, {
-    devtool: 'source-map',
     devServer: {
         contentBase: './dist'
     },
